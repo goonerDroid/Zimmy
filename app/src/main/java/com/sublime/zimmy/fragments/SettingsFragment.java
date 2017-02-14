@@ -25,7 +25,6 @@ import android.view.View;
 
 import com.afollestad.appthemeengine.ATE;
 import com.afollestad.appthemeengine.Config;
-import com.afollestad.appthemeengine.prefs.ATECheckBoxPreference;
 import com.afollestad.appthemeengine.prefs.ATEColorPreference;
 import com.afollestad.materialdialogs.color.ColorChooserDialog;
 import com.sublime.zimmy.R;
@@ -65,7 +64,6 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
         nowPlayingSelector = findPreference(NOW_PLAYING_SELECTOR);
         lastFMlogin = findPreference(LASTFM_LOGIN);
         updateLastFM();
-//        themePreference = (ListPreference) findPreference(KEY_THEME);
         startPagePreference = (ListPreference) findPreference(KEY_START_PAGE);
 
         nowPlayingSelector.setIntent(NavigationUtils.getNavigateToStyleSelectorIntent(getActivity(), Constants.SETTINGS_STYLE_SELECTOR_NOWPLAYING));
@@ -96,16 +94,6 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
     }
 
     private void setPreferenceClickListeners() {
-
-//        themePreference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-//            @Override
-//            public boolean onPreferenceChange(Preference preference, Object newValue) {
-//                Intent i = getActivity().getBaseContext().getPackageManager().getLaunchIntentForPackage(getActivity().getBaseContext().getPackageName());
-//                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//                startActivity(i);
-//                return true;
-//            }
-//        });
 
         startPagePreference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override
@@ -167,44 +155,44 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
         });
 
 
-        findPreference("dark_theme").setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-            @Override
-            public boolean onPreferenceChange(Preference preference, Object newValue) {
-                // Marks both theme configs as changed so MainActivity restarts itself on return
-                Config.markChanged(getActivity(), "light_theme");
-                Config.markChanged(getActivity(), "dark_theme");
-                // The dark_theme preference value gets saved by Android in the default PreferenceManager.
-                // It's used in getATEKey() of both the Activities.
-                getActivity().recreate();
-                return true;
-            }
-        });
+//        findPreference("dark_theme").setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+//            @Override
+//            public boolean onPreferenceChange(Preference preference, Object newValue) {
+//                // Marks both theme configs as changed so MainActivity restarts itself on return
+//                Config.markChanged(getActivity(), "light_theme");
+//                Config.markChanged(getActivity(), "dark_theme");
+//                // The dark_theme preference value gets saved by Android in the default PreferenceManager.
+//                // It's used in getATEKey() of both the Activities.
+//                getActivity().recreate();
+//                return true;
+//            }
+//        });
 
-        final ATECheckBoxPreference statusBarPref = (ATECheckBoxPreference) findPreference("colored_status_bar");
-        final ATECheckBoxPreference navBarPref = (ATECheckBoxPreference) findPreference("colored_nav_bar");
+//        final ATECheckBoxPreference statusBarPref = (ATECheckBoxPreference) findPreference("colored_status_bar");
+//        final ATECheckBoxPreference navBarPref = (ATECheckBoxPreference) findPreference("colored_nav_bar");
 
-        statusBarPref.setChecked(Config.coloredStatusBar(getActivity(), mAteKey));
-        statusBarPref.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-            @Override
-            public boolean onPreferenceChange(Preference preference, Object newValue) {
-                ATE.config(getActivity(), mAteKey)
-                        .coloredStatusBar((Boolean) newValue)
-                        .apply(getActivity());
-                return true;
-            }
-        });
-
-
-        navBarPref.setChecked(Config.coloredNavigationBar(getActivity(), mAteKey));
-        navBarPref.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-            @Override
-            public boolean onPreferenceChange(Preference preference, Object newValue) {
-                ATE.config(getActivity(), mAteKey)
-                        .coloredNavigationBar((Boolean) newValue)
-                        .apply(getActivity());
-                return true;
-            }
-        });
+//        statusBarPref.setChecked(Config.coloredStatusBar(getActivity(), mAteKey));
+//        statusBarPref.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+//            @Override
+//            public boolean onPreferenceChange(Preference preference, Object newValue) {
+//                ATE.config(getActivity(), mAteKey)
+//                        .coloredStatusBar((Boolean) newValue)
+//                        .apply(getActivity());
+//                return true;
+//            }
+//        });
+//
+//
+//        navBarPref.setChecked(Config.coloredNavigationBar(getActivity(), mAteKey));
+//        navBarPref.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+//            @Override
+//            public boolean onPreferenceChange(Preference preference, Object newValue) {
+//                ATE.config(getActivity(), mAteKey)
+//                        .coloredNavigationBar((Boolean) newValue)
+//                        .apply(getActivity());
+//                return true;
+//            }
+//        });
 
     }
 

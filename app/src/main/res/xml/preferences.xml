@@ -27,28 +27,15 @@
             android:title="@string/system_animations"
             app:ateKey_pref_checkBox="?ate_key" />
 
-        <!--<SwitchPreference-->
-        <!--android:defaultValue="false"-->
-        <!--android:key="toggle_artist_grid"-->
-        <!--android:summary="@string/toggle_artists_grid"-->
-        <!--android:title="@string/artist_in_grid"/>-->
 
-        <!--<ListPreference-->
-        <!--android:defaultValue="light"-->
-        <!--android:entries="@array/pref_theme_entries"-->
-        <!--android:entryValues="@array/pref_theme_values"-->
-        <!--android:key="theme_preference"-->
-        <!--android:summary="@string/choose_theme_throughout"-->
-        <!--android:title="@string/select_theme" />-->
-
-        <com.afollestad.appthemeengine.prefs.ATECheckBoxPreference
+        <!--<com.afollestad.appthemeengine.prefs.ATECheckBoxPreference
             android:defaultValue="false"
             android:key="dark_theme"
             android:persistent="true"
             android:summary="@string/dark_theme_summary"
             android:title="@string/dark_theme"
             android:widgetLayout="@layout/ate_preference_checkbox"
-            app:ateKey_pref_checkBox="?ate_key" />
+            app:ateKey_pref_checkBox="?ate_key" />-->
 
         <com.afollestad.appthemeengine.prefs.ATEColorPreference
             android:key="primary_color"
@@ -63,22 +50,6 @@
             android:summary="@string/accent_color_summary"
             android:title="@string/accent_color"
             app:ateKey_pref_color="?ate_key" />
-
-        <com.afollestad.appthemeengine.prefs.ATECheckBoxPreference
-            android:defaultValue="true"
-            android:key="colored_status_bar"
-            android:persistent="false"
-            android:summary="@string/colored_status_bar_summary"
-            android:title="@string/colored_status_bar"
-            app:ateKey_pref_checkBox="?ate_key" />
-
-        <com.afollestad.appthemeengine.prefs.ATECheckBoxPreference
-            android:defaultValue="true"
-            android:key="colored_nav_bar"
-            android:persistent="false"
-            android:summary="@string/colored_nav_bar_summary"
-            android:title="@string/colored_nav_bar"
-            app:ateKey_pref_checkBox="?ate_key" />
 
     </com.sublime.zimmy.widgets.ThemedPreferenceCategory>
 

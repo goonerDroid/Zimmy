@@ -35,9 +35,10 @@ import com.sublime.zimmy.utils.Constants;
 import com.sublime.zimmy.utils.PreferencesUtility;
 import com.sublime.zimmy.R;
 
-public class SettingsActivity extends BaseThemedActivity implements ColorChooserDialog.ColorCallback, ATEActivityThemeCustomizer {
+public class SettingsActivity extends BaseThemedActivity implements ColorChooserDialog.ColorCallback,
+        ATEActivityThemeCustomizer {
 
-    String action;
+    private String action;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
