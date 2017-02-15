@@ -22,7 +22,7 @@ android {
         }
         debug {
             ext.enableCrashlytics = false
-            versionNameSuffix "-debug"
+            versionNameSuffix "-debug-fork"
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
