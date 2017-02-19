@@ -24,12 +24,9 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
 import com.sublime.zimmy.MusicPlayer;
 import com.sublime.zimmy.R;
 import com.sublime.zimmy.models.Song;
-import com.sublime.zimmy.utils.TimberUtils;
 
 import java.util.List;
 
@@ -59,7 +56,7 @@ public class Timber4QueueAdapter extends RecyclerView.Adapter<Timber4QueueAdapte
 //        setAnimation(itemHolder.itemView, i);
         Song localItem = arraylist.get(i);
 
-        ImageLoader.getInstance().displayImage(TimberUtils.getAlbumArtUri(localItem.albumId).toString(), itemHolder.albumArt, new DisplayImageOptions.Builder().cacheInMemory(true).showImageOnFail(R.drawable.ic_empty_music2).resetViewBeforeLoading(true).build());
+//        ImageLoader.getInstance().displayImage(TimberUtils.getAlbumArtUri(localItem.albumId).toString(), itemHolder.albumArt, new DisplayImageOptions.Builder().cacheInMemory(true).showImageOnFail(R.drawable.ic_empty_music2).resetViewBeforeLoading(true).build());
 
     }
 

@@ -26,11 +26,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.afollestad.appthemeengine.Config;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.assist.FailReason;
-import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
-import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.target.Target;
 import com.sublime.zimmy.R;
 import com.sublime.zimmy.models.Album;
 import com.sublime.zimmy.utils.Helpers;
@@ -55,82 +54,83 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ItemHolder> 
 
     @Override
     public ItemHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+        View v;
         if (isGrid) {
-            View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_album_grid, null);
-            ItemHolder ml = new ItemHolder(v);
-            return ml;
+            v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_album_grid, viewGroup,false);
         } else {
-            View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_album_list, null);
-            ItemHolder ml = new ItemHolder(v);
-            return ml;
+            v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_album_list, viewGroup,false);
         }
+        return new ItemHolder(v);
     }
 
     @Override
-    public void onBindViewHolder(final ItemHolder itemHolder, int i) {
+    public void onBindViewHolder(ItemHolder itemHolder, final int i) {
         Album localItem = arraylist.get(i);
-
         itemHolder.title.setText(localItem.title);
         itemHolder.artist.setText(localItem.artistName);
+        Glide.with(mContext)
+                .load(TimberUtils.getAlbumArtUri(localItem.id).toString())
+                .crossFade()
+                .into(itemHolder.albumArt);
+        setBackgroundColor(localItem,itemHolder);
+        if (TimberUtils.isLollipop()) {
+            itemHolder.albumArt.setTransitionName("transition_album_art" + i);
+        }
+    }
 
-        ImageLoader.getInstance().displayImage(TimberUtils.getAlbumArtUri(localItem.id).toString(), itemHolder.albumArt,
-                new DisplayImageOptions.Builder().cacheInMemory(true)
-                        .showImageOnFail(R.drawable.ic_empty_music2)
-                        .resetViewBeforeLoading(true)
-                        .displayer(new FadeInBitmapDisplayer(400))
-                        .build(), new SimpleImageLoadingListener() {
+    private void setBackgroundColor(Album localItem, final ItemHolder itemHolder){
+        Glide.with(mContext)
+                .load(TimberUtils.getAlbumArtUri(localItem.id).toString())
+                .asBitmap()
+                .into(new SimpleTarget<Bitmap>(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL) {
                     @Override
-                    public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-                        if (isGrid) {
-                            new Palette.Builder(loadedImage).generate(new Palette.PaletteAsyncListener() {
-                                @Override
-                                public void onGenerated(Palette palette) {
-                                    Palette.Swatch swatch = palette.getVibrantSwatch();
-                                    if (swatch != null) {
-                                        int color = swatch.getRgb();
-                                        itemHolder.footer.setBackgroundColor(color);
-                                        int textColor = TimberUtils.getBlackWhiteColor(swatch.getTitleTextColor());
-                                        itemHolder.title.setTextColor(textColor);
-                                        itemHolder.artist.setTextColor(textColor);
-                                    } else {
-                                        Palette.Swatch mutedSwatch = palette.getMutedSwatch();
-                                        if (mutedSwatch != null) {
-                                            int color = mutedSwatch.getRgb();
+                    public void onResourceReady(Bitmap loadedImage, GlideAnimation anim) {
+                        if (loadedImage != null) {
+                            itemHolder.albumArt.setImageBitmap(loadedImage);
+                            if (isGrid) {
+                                new Palette.Builder(loadedImage).generate(new Palette.PaletteAsyncListener() {
+                                    @Override
+                                    public void onGenerated(Palette palette) {
+                                        Palette.Swatch swatch = palette.getVibrantSwatch();
+                                        if (swatch != null) {
+                                            int color = swatch.getRgb();
                                             itemHolder.footer.setBackgroundColor(color);
-                                            int textColor = TimberUtils.getBlackWhiteColor(mutedSwatch.getTitleTextColor());
+                                            int textColor = TimberUtils.getBlackWhiteColor(swatch.getTitleTextColor());
                                             itemHolder.title.setTextColor(textColor);
                                             itemHolder.artist.setTextColor(textColor);
+                                        } else {
+                                            Palette.Swatch mutedSwatch = palette.getMutedSwatch();
+                                            if (mutedSwatch != null) {
+                                                int color = mutedSwatch.getRgb();
+                                                itemHolder.footer.setBackgroundColor(color);
+                                                int textColor = TimberUtils.getBlackWhiteColor(mutedSwatch.getTitleTextColor());
+                                                itemHolder.title.setTextColor(textColor);
+                                                itemHolder.artist.setTextColor(textColor);
+                                            }
                                         }
+
+
                                     }
+                                });
 
-
+                            }
+                        }else{
+                            if (isGrid) {
+                                itemHolder.footer.setBackgroundColor(0);
+                                if (mContext != null) {
+                                    int textColorPrimary = Config.textColorPrimary(mContext, Helpers.getATEKey(mContext));
+                                    itemHolder.title.setTextColor(textColorPrimary);
+                                    itemHolder.artist.setTextColor(textColorPrimary);
                                 }
-                            });
-                        }
-
-                    }
-
-                    @Override
-                    public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
-                        if (isGrid) {
-                            itemHolder.footer.setBackgroundColor(0);
-                            if (mContext != null) {
-                                int textColorPrimary = Config.textColorPrimary(mContext, Helpers.getATEKey(mContext));
-                                itemHolder.title.setTextColor(textColorPrimary);
-                                itemHolder.artist.setTextColor(textColorPrimary);
                             }
                         }
                     }
                 });
-
-        if (TimberUtils.isLollipop())
-            itemHolder.albumArt.setTransitionName("transition_album_art" + i);
-
     }
 
     @Override
     public int getItemCount() {
-        return (null != arraylist ? arraylist.size() : 0);
+        return null != arraylist ? arraylist.size() : 0;
     }
 
     public void updateDataSet(List<Album> arraylist) {
@@ -138,9 +138,10 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ItemHolder> 
     }
 
     public class ItemHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        protected TextView title, artist;
+        protected TextView title;
+        protected TextView artist;
         protected ImageView albumArt;
-        protected View footer;
+        View footer;
 
         public ItemHolder(View view) {
             super(view);

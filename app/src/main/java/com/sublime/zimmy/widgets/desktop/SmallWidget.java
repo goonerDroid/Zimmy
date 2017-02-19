@@ -4,15 +4,12 @@ import android.app.PendingIntent;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.widget.RemoteViews;
 
-import com.nostra13.universalimageloader.core.ImageLoader;
 import com.sublime.zimmy.MusicPlayer;
 import com.sublime.zimmy.MusicService;
 import com.sublime.zimmy.R;
 import com.sublime.zimmy.utils.NavigationUtils;
-import com.sublime.zimmy.utils.TimberUtils;
 
 /**
  * Created by nv95 on 02.11.16.
@@ -55,12 +52,12 @@ public class SmallWidget extends BaseWidget {
                 MusicPlayer.isPlaying() ? R.drawable.ic_pause_white_36dp : R.drawable.ic_play_white_36dp);
         long albumId = MusicPlayer.getCurrentAlbumId();
         if (albumId != -1) {
-            Bitmap artwork;
-            artwork = ImageLoader.getInstance().loadImageSync(TimberUtils.getAlbumArtUri(albumId).toString());
-            if (artwork == null) {
-                artwork = ImageLoader.getInstance().loadImageSync("drawable://" + R.drawable.ic_empty_music2);
-            }
-            remoteViews.setImageViewBitmap(R.id.imageView_cover, artwork);
+//            Bitmap artwork;
+//            artwork = ImageLoader.getInstance().loadImageSync(TimberUtils.getAlbumArtUri(albumId).toString());
+//            if (artwork == null) {
+//                artwork = ImageLoader.getInstance().loadImageSync("drawable://" + R.drawable.ic_empty_music2);
+//            }
+//            remoteViews.setImageViewBitmap(R.id.imageView_cover, artwork);
         }
         remoteViews.setOnClickPendingIntent(R.id.textView_title, PendingIntent.getActivity(
                 context,

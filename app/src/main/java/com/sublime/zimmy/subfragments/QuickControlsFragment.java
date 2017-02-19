@@ -32,10 +32,6 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.afollestad.appthemeengine.Config;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.assist.FailReason;
-import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.sublime.zimmy.MusicPlayer;
 import com.sublime.zimmy.R;
 import com.sublime.zimmy.activities.BaseActivity;
@@ -45,7 +41,6 @@ import com.sublime.zimmy.utils.ImageUtils;
 import com.sublime.zimmy.utils.NavigationUtils;
 import com.sublime.zimmy.utils.PreferencesUtility;
 import com.sublime.zimmy.utils.SlideTrackSwitcher;
-import com.sublime.zimmy.utils.TimberUtils;
 import com.sublime.zimmy.widgets.PlayPauseButton;
 
 import net.steamcrafted.materialiconlib.MaterialIconView;
@@ -221,35 +216,35 @@ public class QuickControlsFragment extends Fragment implements MusicStateListene
         mTitleExpanded.setText(MusicPlayer.getTrackName());
         mArtistExpanded.setText(MusicPlayer.getArtistName());
         if (!duetoplaypause) {
-            ImageLoader.getInstance().displayImage(TimberUtils.getAlbumArtUri(MusicPlayer.getCurrentAlbumId()).toString(), mAlbumArt,
-                    new DisplayImageOptions.Builder().cacheInMemory(true)
-                            .showImageOnFail(R.drawable.ic_empty_music2)
-                            .resetViewBeforeLoading(true)
-                            .build(), new ImageLoadingListener() {
-                        @Override
-                        public void onLoadingStarted(String imageUri, View view) {
-
-                        }
-
-                        @Override
-                        public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
-                            Bitmap failedBitmap = ImageLoader.getInstance().loadImageSync("drawable://" + R.drawable.ic_empty_music2);
-                            if (getActivity() != null)
-                                new setBlurredAlbumArt().execute(failedBitmap);
-                        }
-
-                        @Override
-                        public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-                            if (getActivity() != null)
-                                new setBlurredAlbumArt().execute(loadedImage);
-
-                        }
-
-                        @Override
-                        public void onLoadingCancelled(String imageUri, View view) {
-
-                        }
-                    });
+//            ImageLoader.getInstance().displayImage(TimberUtils.getAlbumArtUri(MusicPlayer.getCurrentAlbumId()).toString(), mAlbumArt,
+//                    new DisplayImageOptions.Builder().cacheInMemory(true)
+//                            .showImageOnFail(R.drawable.ic_empty_music2)
+//                            .resetViewBeforeLoading(true)
+//                            .build(), new ImageLoadingListener() {
+//                        @Override
+//                        public void onLoadingStarted(String imageUri, View view) {
+//
+//                        }
+//
+//                        @Override
+//                        public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
+//                            Bitmap failedBitmap = ImageLoader.getInstance().loadImageSync("drawable://" + R.drawable.ic_empty_music2);
+//                            if (getActivity() != null)
+//                                new setBlurredAlbumArt().execute(failedBitmap);
+//                        }
+//
+//                        @Override
+//                        public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+//                            if (getActivity() != null)
+//                                new setBlurredAlbumArt().execute(loadedImage);
+//
+//                        }
+//
+//                        @Override
+//                        public void onLoadingCancelled(String imageUri, View view) {
+//
+//                        }
+//                    });
         }
         duetoplaypause = false;
         mProgress.setMax((int) MusicPlayer.duration());

@@ -32,9 +32,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 import com.sublime.zimmy.R;
 import com.sublime.zimmy.dataloaders.ArtistLoader;
 import com.sublime.zimmy.lastfmapi.LastFmClient;
@@ -123,41 +120,41 @@ public class ArtistDetailFragment extends Fragment {
             public void artistInfoSucess(final LastfmArtist artist) {
                 if (artist != null) {
 
-                    ImageLoader.getInstance().displayImage(artist.mArtwork.get(4).mUrl, artistArt,
-                            new DisplayImageOptions.Builder().cacheInMemory(true)
-                                    .cacheOnDisk(true)
-                                    .showImageOnFail(R.drawable.ic_empty_music2)
-                                    .build(), new SimpleImageLoadingListener() {
-                                @Override
-                                public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-                                    largeImageLoaded = true;
-                                    try {
-                                        new Palette.Builder(loadedImage).generate(new Palette.PaletteAsyncListener() {
-                                            @Override
-                                            public void onGenerated(Palette palette) {
-                                                Palette.Swatch swatch = palette.getVibrantSwatch();
-                                                if (swatch != null) {
-                                                    primaryColor = swatch.getRgb();
-                                                    collapsingToolbarLayout.setContentScrimColor(primaryColor);
-                                                    if (getActivity() != null)
-                                                        ATEUtils.setStatusBarColor(getActivity(), Helpers.getATEKey(getActivity()), primaryColor);
-                                                } else {
-                                                    Palette.Swatch swatchMuted = palette.getMutedSwatch();
-                                                    if (swatchMuted != null) {
-                                                        primaryColor = swatchMuted.getRgb();
-                                                        collapsingToolbarLayout.setContentScrimColor(primaryColor);
-                                                        if (getActivity() != null)
-                                                            ATEUtils.setStatusBarColor(getActivity(), Helpers.getATEKey(getActivity()), primaryColor);
-                                                    }
-                                                }
-
-                                            }
-                                        });
-                                    } catch (Exception ignored) {
-
-                                    }
-                                }
-                            });
+//                    ImageLoader.getInstance().displayImage(artist.mArtwork.get(4).mUrl, artistArt,
+//                            new DisplayImageOptions.Builder().cacheInMemory(true)
+//                                    .cacheOnDisk(true)
+//                                    .showImageOnFail(R.drawable.ic_empty_music2)
+//                                    .build(), new SimpleImageLoadingListener() {
+//                                @Override
+//                                public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+//                                    largeImageLoaded = true;
+//                                    try {
+//                                        new Palette.Builder(loadedImage).generate(new Palette.PaletteAsyncListener() {
+//                                            @Override
+//                                            public void onGenerated(Palette palette) {
+//                                                Palette.Swatch swatch = palette.getVibrantSwatch();
+//                                                if (swatch != null) {
+//                                                    primaryColor = swatch.getRgb();
+//                                                    collapsingToolbarLayout.setContentScrimColor(primaryColor);
+//                                                    if (getActivity() != null)
+//                                                        ATEUtils.setStatusBarColor(getActivity(), Helpers.getATEKey(getActivity()), primaryColor);
+//                                                } else {
+//                                                    Palette.Swatch swatchMuted = palette.getMutedSwatch();
+//                                                    if (swatchMuted != null) {
+//                                                        primaryColor = swatchMuted.getRgb();
+//                                                        collapsingToolbarLayout.setContentScrimColor(primaryColor);
+//                                                        if (getActivity() != null)
+//                                                            ATEUtils.setStatusBarColor(getActivity(), Helpers.getATEKey(getActivity()), primaryColor);
+//                                                    }
+//                                                }
+//
+//                                            }
+//                                        });
+//                                    } catch (Exception ignored) {
+//
+//                                    }
+//                                }
+//                            });
                     Handler handler = new Handler();
                     handler.postDelayed(new Runnable() {
                         @Override
@@ -178,14 +175,14 @@ public class ArtistDetailFragment extends Fragment {
     }
 
     private void setBlurredPlaceholder(LastfmArtist artist) {
-        ImageLoader.getInstance().loadImage(artist.mArtwork.get(1).mUrl, new SimpleImageLoadingListener() {
-            @Override
-            public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-                if (getActivity() != null && !largeImageLoaded)
-                    new setBlurredAlbumArt().execute(loadedImage);
-
-            }
-        });
+//        ImageLoader.getInstance().loadImage(artist.mArtwork.get(1).mUrl, new SimpleImageLoadingListener() {
+//            @Override
+//            public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+//                if (getActivity() != null && !largeImageLoaded)
+//                    new setBlurredAlbumArt().execute(loadedImage);
+//
+//            }
+//        });
     }
 
     @Override

@@ -26,6 +26,8 @@ import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 
+import com.sublime.zimmy.MusicPlayer;
+import com.sublime.zimmy.R;
 import com.sublime.zimmy.dialogs.AddPlaylistDialog;
 import com.sublime.zimmy.lastfmapi.LastFmClient;
 import com.sublime.zimmy.lastfmapi.callbacks.ArtistInfoListener;
@@ -36,11 +38,6 @@ import com.sublime.zimmy.models.Artist;
 import com.sublime.zimmy.models.Song;
 import com.sublime.zimmy.utils.NavigationUtils;
 import com.sublime.zimmy.utils.TimberUtils;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
-import com.sublime.zimmy.MusicPlayer;
-import com.sublime.zimmy.R;
 
 import java.util.Collections;
 import java.util.List;
@@ -88,26 +85,26 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ItemHolder
                 Song song = (Song) searchResults.get(i);
                 itemHolder.title.setText(song.title);
                 itemHolder.songartist.setText(song.albumName);
-                ImageLoader.getInstance().displayImage(TimberUtils.getAlbumArtUri(song.albumId).toString(), itemHolder.albumArt,
-                        new DisplayImageOptions.Builder().cacheInMemory(true)
-                                .cacheOnDisk(true)
-                                .showImageOnFail(R.drawable.ic_empty_music2)
-                                .resetViewBeforeLoading(true)
-                                .displayer(new FadeInBitmapDisplayer(400))
-                                .build());
+//                ImageLoader.getInstance().displayImage(TimberUtils.getAlbumArtUri(song.albumId).toString(), itemHolder.albumArt,
+//                        new DisplayImageOptions.Builder().cacheInMemory(true)
+//                                .cacheOnDisk(true)
+//                                .showImageOnFail(R.drawable.ic_empty_music2)
+//                                .resetViewBeforeLoading(true)
+//                                .displayer(new FadeInBitmapDisplayer(400))
+//                                .build());
                 setOnPopupMenuListener(itemHolder, i);
                 break;
             case 1:
                 Album album = (Album) searchResults.get(i);
                 itemHolder.albumtitle.setText(album.title);
                 itemHolder.albumartist.setText(album.artistName);
-                ImageLoader.getInstance().displayImage(TimberUtils.getAlbumArtUri(album.id).toString(), itemHolder.albumArt,
-                        new DisplayImageOptions.Builder().cacheInMemory(true)
-                                .cacheOnDisk(true)
-                                .showImageOnFail(R.drawable.ic_empty_music2)
-                                .resetViewBeforeLoading(true)
-                                .displayer(new FadeInBitmapDisplayer(400))
-                                .build());
+//                ImageLoader.getInstance().displayImage(TimberUtils.getAlbumArtUri(album.id).toString(), itemHolder.albumArt,
+//                        new DisplayImageOptions.Builder().cacheInMemory(true)
+//                                .cacheOnDisk(true)
+//                                .showImageOnFail(R.drawable.ic_empty_music2)
+//                                .resetViewBeforeLoading(true)
+//                                .displayer(new FadeInBitmapDisplayer(400))
+//                                .build());
                 break;
             case 2:
                 Artist artist = (Artist) searchResults.get(i);
@@ -119,13 +116,13 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ItemHolder
                     @Override
                     public void artistInfoSucess(LastfmArtist artist) {
                         if (artist != null && itemHolder.artistImage != null) {
-                            ImageLoader.getInstance().displayImage(artist.mArtwork.get(1).mUrl, itemHolder.artistImage,
-                                    new DisplayImageOptions.Builder().cacheInMemory(true)
-                                            .cacheOnDisk(true)
-                                            .showImageOnFail(R.drawable.ic_empty_music2)
-                                            .resetViewBeforeLoading(true)
-                                            .displayer(new FadeInBitmapDisplayer(400))
-                                            .build());
+//                            ImageLoader.getInstance().displayImage(artist.mArtwork.get(1).mUrl, itemHolder.artistImage,
+//                                    new DisplayImageOptions.Builder().cacheInMemory(true)
+//                                            .cacheOnDisk(true)
+//                                            .showImageOnFail(R.drawable.ic_empty_music2)
+//                                            .resetViewBeforeLoading(true)
+//                                            .displayer(new FadeInBitmapDisplayer(400))
+//                                            .build());
                         }
                     }
 

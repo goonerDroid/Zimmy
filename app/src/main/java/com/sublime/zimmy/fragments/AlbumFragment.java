@@ -57,8 +57,7 @@ public class AlbumFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(
-                R.layout.fragment_recyclerview, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_recyclerview, container, false);
 
         recyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerview);
         fastScroller = (FastScroller) rootView.findViewById(R.id.fastscroller);
@@ -66,7 +65,7 @@ public class AlbumFragment extends Fragment {
         setLayoutManager();
 
         if (getActivity() != null)
-            new loadAlbums().execute("");
+            new LoadAlbums().execute("");
         return rootView;
     }
 
@@ -127,7 +126,6 @@ public class AlbumFragment extends Fragment {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.album_sort_by, menu);
         inflater.inflate(R.menu.menu_show_as, menu);
-
     }
 
     @Override
@@ -158,11 +156,11 @@ public class AlbumFragment extends Fragment {
                 isGrid = false;
                 updateLayoutManager(1);
                 return true;
-            case R.id.menu_show_as_grid:
+            default://menu shown as grid
                 mPreferences.setAlbumsInGrid(true);
                 isGrid = true;
                 updateLayoutManager(2);
-                return true;
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -170,24 +168,21 @@ public class AlbumFragment extends Fragment {
     public class SpacesItemDecoration extends RecyclerView.ItemDecoration {
         private int space;
 
-        public SpacesItemDecoration(int space) {
+        SpacesItemDecoration(int space) {
             this.space = space;
         }
 
         @Override
         public void getItemOffsets(Rect outRect, View view,
                                    RecyclerView parent, RecyclerView.State state) {
-
-
             outRect.left = space;
             outRect.top = space;
             outRect.right = space;
             outRect.bottom = space;
-
         }
     }
 
-    private class loadAlbums extends AsyncTask<String, Void, String> {
+    private class LoadAlbums extends AsyncTask<String, Void, String> {
 
         @Override
         protected String doInBackground(String... params) {
@@ -208,6 +203,7 @@ public class AlbumFragment extends Fragment {
 
         @Override
         protected void onPreExecute() {
+            //Not Used
         }
     }
 }

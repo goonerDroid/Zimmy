@@ -41,8 +41,6 @@ import com.afollestad.appthemeengine.customizers.ATEActivityThemeCustomizer;
 import com.afollestad.appthemeengine.customizers.ATEToolbarCustomizer;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
 import com.sublime.zimmy.R;
 import com.sublime.zimmy.adapters.SongsListAdapter;
 import com.sublime.zimmy.dataloaders.LastAddedLoader;
@@ -174,11 +172,11 @@ public class PlaylistDetailActivity extends BaseActivity implements ATEActivityT
     }
 
     private void loadBitmap(String uri) {
-        ImageLoader.getInstance().displayImage(uri, blurFrame,
-                new DisplayImageOptions.Builder().cacheInMemory(true)
-                        .showImageOnFail(R.drawable.ic_empty_music2)
-                        .resetViewBeforeLoading(true)
-                        .build());
+//        ImageLoader.getInstance().displayImage(uri, blurFrame,
+//                new DisplayImageOptions.Builder().cacheInMemory(true)
+//                        .showImageOnFail(R.drawable.ic_empty_music2)
+//                        .resetViewBeforeLoading(true)
+//                        .build());
     }
 
     private void setRecyclerViewAapter() {

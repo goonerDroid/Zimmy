@@ -15,7 +15,6 @@
 package com.sublime.zimmy.subfragments;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -27,9 +26,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 import com.sublime.zimmy.R;
 import com.sublime.zimmy.dataloaders.LastAddedLoader;
 import com.sublime.zimmy.dataloaders.PlaylistLoader;
@@ -209,15 +205,15 @@ public class PlaylistPagerFragment extends Fragment {
 
         @Override
         protected void onPostExecute(String uri) {
-            ImageLoader.getInstance().displayImage(uri, playlistImage,
-                    new DisplayImageOptions.Builder().cacheInMemory(true)
-                            .showImageOnFail(R.drawable.ic_empty_music2)
-                            .resetViewBeforeLoading(true)
-                            .build(), new SimpleImageLoadingListener() {
-                        @Override
-                        public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-                        }
-                    });
+//            ImageLoader.getInstance().displayImage(uri, playlistImage,
+//                    new DisplayImageOptions.Builder().cacheInMemory(true)
+//                            .showImageOnFail(R.drawable.ic_empty_music2)
+//                            .resetViewBeforeLoading(true)
+//                            .build(), new SimpleImageLoadingListener() {
+//                        @Override
+//                        public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+//                        }
+//                    });
             songcount.setText(" " + String.valueOf(songCountInt) + " " + mContext.getString(R.string.songs));
         }
 

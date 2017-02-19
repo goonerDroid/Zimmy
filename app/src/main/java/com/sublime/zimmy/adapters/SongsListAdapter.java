@@ -29,8 +29,6 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import com.afollestad.appthemeengine.Config;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
 import com.sublime.zimmy.MusicPlayer;
 import com.sublime.zimmy.R;
 import com.sublime.zimmy.dialogs.AddPlaylistDialog;
@@ -68,11 +66,11 @@ public class SongsListAdapter extends RecyclerView.Adapter<SongsListAdapter.Item
     @Override
     public ItemHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         if (isPlaylist) {
-            View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_song_playlist, null);
+            View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_song_playlist, viewGroup,false);
             ItemHolder ml = new ItemHolder(v);
             return ml;
         } else {
-            View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_song, null);
+            View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_song, viewGroup,false);
             ItemHolder ml = new ItemHolder(v);
             return ml;
         }
@@ -85,7 +83,7 @@ public class SongsListAdapter extends RecyclerView.Adapter<SongsListAdapter.Item
         itemHolder.title.setText(localItem.title);
         itemHolder.artist.setText(localItem.artistName);
 
-        ImageLoader.getInstance().displayImage(TimberUtils.getAlbumArtUri(localItem.albumId).toString(), itemHolder.albumArt, new DisplayImageOptions.Builder().cacheInMemory(true).showImageOnFail(R.drawable.ic_empty_music2).resetViewBeforeLoading(true).build());
+//        ImageLoader.getInstance().displayImage(TimberUtils.getAlbumArtUri(localItem.albumId).toString(), itemHolder.albumArt, new DisplayImageOptions.Builder().cacheInMemory(true).showImageOnFail(R.drawable.ic_empty_music2).resetViewBeforeLoading(true).build());
         if (MusicPlayer.getCurrentAudioId() == localItem.id) {
             itemHolder.title.setTextColor(Config.accentColor(mContext, ateKey));
             if (MusicPlayer.isPlaying()) {
@@ -179,7 +177,7 @@ public class SongsListAdapter extends RecyclerView.Adapter<SongsListAdapter.Item
         });
     }
 
-    public long[] getSongIds() {
+    private long[] getSongIds() {
         long[] ret = new long[getItemCount()];
         for (int i = 0; i < getItemCount(); i++) {
             ret[i] = arraylist.get(i).id;

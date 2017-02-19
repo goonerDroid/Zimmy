@@ -32,7 +32,6 @@ import android.database.ContentObserver;
 import android.database.Cursor;
 import android.database.MatrixCursor;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.media.AudioManager;
 import android.media.AudioManager.OnAudioFocusChangeListener;
 import android.media.MediaPlayer;
@@ -57,7 +56,6 @@ import android.support.v4.media.MediaMetadataCompat;
 import android.support.v4.media.session.MediaSessionCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
 import android.support.v7.app.NotificationCompat;
-import android.support.v7.graphics.Palette;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -73,7 +71,6 @@ import com.sublime.zimmy.provider.SongPlayCount;
 import com.sublime.zimmy.utils.NavigationUtils;
 import com.sublime.zimmy.utils.PreferencesUtility;
 import com.sublime.zimmy.utils.TimberUtils;
-import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.io.IOException;
 import java.lang.ref.WeakReference;
@@ -1085,15 +1082,15 @@ public class MusicService extends Service {
                         .build());
             }
         } else if (what.equals(META_CHANGED) || what.equals(QUEUE_CHANGED)) {
-            Bitmap albumArt = ImageLoader.getInstance().loadImageSync(TimberUtils.getAlbumArtUri(getAlbumId()).toString());
-            if (albumArt != null) {
-
-                Bitmap.Config config = albumArt.getConfig();
-                if (config == null) {
-                    config = Bitmap.Config.ARGB_8888;
-                }
-                albumArt = albumArt.copy(config, false);
-            }
+//            Bitmap albumArt = ImageLoader.getInstance().loadImageSync(TimberUtils.getAlbumArtUri(getAlbumId()).toString());
+//            if (albumArt != null) {
+//
+//                Bitmap.Config config = albumArt.getConfig();
+//                if (config == null) {
+//                    config = Bitmap.Config.ARGB_8888;
+//                }
+//                albumArt = albumArt.copy(config, false);
+//            }
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 mSession.setMetadata(new MediaMetadataCompat.Builder()
                         .putString(MediaMetadataCompat.METADATA_KEY_ARTIST, getArtistName())
@@ -1104,8 +1101,8 @@ public class MusicService extends Service {
                         .putLong(MediaMetadataCompat.METADATA_KEY_TRACK_NUMBER, getQueuePosition() + 1)
                         .putLong(MediaMetadataCompat.METADATA_KEY_NUM_TRACKS, getQueue().length)
                         .putString(MediaMetadataCompat.METADATA_KEY_GENRE, getGenreName())
-                        .putBitmap(MediaMetadataCompat.METADATA_KEY_ALBUM_ART,
-                                mShowAlbumArtOnLockscreen ? albumArt : null)
+//                        .putBitmap(MediaMetadataCompat.METADATA_KEY_ALBUM_ART,
+//                                mShowAlbumArtOnLockscreen ? albumArt : null)
                         .build());
 
                 mSession.setPlaybackState(new PlaybackStateCompat.Builder()
@@ -1130,11 +1127,11 @@ public class MusicService extends Service {
         Intent nowPlayingIntent = NavigationUtils.getNowPlayingIntent(this);
         PendingIntent clickIntent = PendingIntent.getActivity(this, 0, nowPlayingIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         Bitmap artwork;
-        artwork = ImageLoader.getInstance().loadImageSync(TimberUtils.getAlbumArtUri(getAlbumId()).toString());
-
-        if (artwork == null) {
-            artwork = ImageLoader.getInstance().loadImageSync("drawable://" + R.drawable.ic_empty_music2);
-        }
+//        artwork = ImageLoader.getInstance().loadImageSync(TimberUtils.getAlbumArtUri(getAlbumId()).toString());
+//
+//        if (artwork == null) {
+//            artwork = ImageLoader.getInstance().loadImageSync("drawable://" + R.drawable.ic_empty_music2);
+//        }
 
         if (mNotificationPostTime == 0) {
             mNotificationPostTime = System.currentTimeMillis();
@@ -1142,7 +1139,7 @@ public class MusicService extends Service {
 
         android.support.v4.app.NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
                 .setSmallIcon(R.drawable.ic_notification)
-                .setLargeIcon(artwork)
+//                .setLargeIcon(artwork)
                 .setContentIntent(clickIntent)
                 .setContentTitle(getTrackName())
                 .setContentText(text)
@@ -1166,8 +1163,8 @@ public class MusicService extends Service {
                     .setShowActionsInCompactView(0, 1, 2, 3);
             builder.setStyle(style);
         }
-        if (artwork != null && TimberUtils.isLollipop())
-            builder.setColor(Palette.from(artwork).generate().getVibrantColor(Color.parseColor("#403f4d")));
+//        if (artwork != null && TimberUtils.isLollipop())
+//            builder.setColor(Palette.from(artwork).generate().getVibrantColor(Color.parseColor("#403f4d")));
         Notification n = builder.build();
 
         if (PreferencesUtility.getInstance(this).getXPosedTrackselectorEnabled()) {
@@ -1192,8 +1189,8 @@ public class MusicService extends Service {
                 ArrayList<Bundle> list = new ArrayList<>();
                 do {
                     TrackItem t = new TrackItem()
-                            .setArt(ImageLoader.getInstance()
-                                    .loadImageSync(TimberUtils.getAlbumArtUri(c.getLong(c.getColumnIndexOrThrow(AudioColumns.ALBUM_ID))).toString()))
+//                            .setArt(ImageLoader.getInstance()
+//                                    .loadImageSync(TimberUtils.getAlbumArtUri(c.getLong(c.getColumnIndexOrThrow(AudioColumns.ALBUM_ID))).toString()))
                             .setTitle(c.getString(c.getColumnIndexOrThrow(AudioColumns.TITLE)))
                             .setArtist(c.getString(c.getColumnIndexOrThrow(AudioColumns.ARTIST)))
                             .setDuration(TimberUtils.makeShortTimeString(this, c.getInt(c.getColumnIndexOrThrow(AudioColumns.DURATION)) / 1000));
@@ -2091,7 +2088,7 @@ public class MusicService extends Service {
         }
     }
 
-    public void refresh() {
+    public void refreshData() {
         notifyChange(REFRESH);
     }
 
@@ -2525,7 +2522,7 @@ public class MusicService extends Service {
 
         @Override
         public void refresh() throws RemoteException {
-            mService.get().refresh();
+            mService.get().refreshData();
         }
 
         @Override
@@ -2731,9 +2728,8 @@ public class MusicService extends Service {
 
         @Override
         public void run() {
-
             Log.e("ELEVEN", "calling refresh!");
-            refresh();
+            refreshData();
         }
     }
 

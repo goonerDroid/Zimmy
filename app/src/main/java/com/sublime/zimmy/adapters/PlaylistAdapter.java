@@ -1,8 +1,6 @@
 package com.sublime.zimmy.adapters;
 
 import android.app.Activity;
-import android.graphics.Bitmap;
-import android.support.v7.graphics.Palette;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,11 +8,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.afollestad.appthemeengine.Config;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.assist.FailReason;
-import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 import com.sublime.zimmy.R;
 import com.sublime.zimmy.dataloaders.LastAddedLoader;
 import com.sublime.zimmy.dataloaders.PlaylistSongLoader;
@@ -23,7 +16,6 @@ import com.sublime.zimmy.dataloaders.TopTracksLoader;
 import com.sublime.zimmy.models.Playlist;
 import com.sublime.zimmy.models.Song;
 import com.sublime.zimmy.utils.Constants;
-import com.sublime.zimmy.utils.Helpers;
 import com.sublime.zimmy.utils.NavigationUtils;
 import com.sublime.zimmy.utils.PreferencesUtility;
 import com.sublime.zimmy.utils.TimberUtils;
@@ -77,54 +69,54 @@ public class PlaylistAdapter extends RecyclerView.Adapter<PlaylistAdapter.ItemHo
 
         String s = getAlbumArtUri(i, localItem.id);
         itemHolder.albumArt.setTag(firstAlbumID);
-        ImageLoader.getInstance().displayImage(s, itemHolder.albumArt,
-                new DisplayImageOptions.Builder().cacheInMemory(true)
-                        .showImageOnFail(R.drawable.ic_empty_music2)
-                        .resetViewBeforeLoading(true)
-                        .build(), new SimpleImageLoadingListener() {
-                    @Override
-                    public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-                        if (isGrid) {
-                            new Palette.Builder(loadedImage).generate(new Palette.PaletteAsyncListener() {
-                                @Override
-                                public void onGenerated(Palette palette) {
-                                    Palette.Swatch swatch = palette.getVibrantSwatch();
-                                    if (swatch != null) {
-                                        int color = swatch.getRgb();
-                                        itemHolder.footer.setBackgroundColor(color);
-                                        int textColor = TimberUtils.getBlackWhiteColor(swatch.getTitleTextColor());
-                                        itemHolder.title.setTextColor(textColor);
-                                        itemHolder.artist.setTextColor(textColor);
-                                    } else {
-                                        Palette.Swatch mutedSwatch = palette.getMutedSwatch();
-                                        if (mutedSwatch != null) {
-                                            int color = mutedSwatch.getRgb();
-                                            itemHolder.footer.setBackgroundColor(color);
-                                            int textColor = TimberUtils.getBlackWhiteColor(mutedSwatch.getTitleTextColor());
-                                            itemHolder.title.setTextColor(textColor);
-                                            itemHolder.artist.setTextColor(textColor);
-                                        }
-                                    }
-
-
-                                }
-                            });
-                        }
-
-                    }
-
-                    @Override
-                    public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
-                        if (isGrid) {
-                            itemHolder.footer.setBackgroundColor(0);
-                            if (mContext != null) {
-                                int textColorPrimary = Config.textColorPrimary(mContext, Helpers.getATEKey(mContext));
-                                itemHolder.title.setTextColor(textColorPrimary);
-                                itemHolder.artist.setTextColor(textColorPrimary);
-                            }
-                        }
-                    }
-                });
+//        ImageLoader.getInstance().displayImage(s, itemHolder.albumArt,
+//                new DisplayImageOptions.Builder().cacheInMemory(true)
+//                        .showImageOnFail(R.drawable.ic_empty_music2)
+//                        .resetViewBeforeLoading(true)
+//                        .build(), new SimpleImageLoadingListener() {
+//                    @Override
+//                    public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+//                        if (isGrid) {
+//                            new Palette.Builder(loadedImage).generate(new Palette.PaletteAsyncListener() {
+//                                @Override
+//                                public void onGenerated(Palette palette) {
+//                                    Palette.Swatch swatch = palette.getVibrantSwatch();
+//                                    if (swatch != null) {
+//                                        int color = swatch.getRgb();
+//                                        itemHolder.footer.setBackgroundColor(color);
+//                                        int textColor = TimberUtils.getBlackWhiteColor(swatch.getTitleTextColor());
+//                                        itemHolder.title.setTextColor(textColor);
+//                                        itemHolder.artist.setTextColor(textColor);
+//                                    } else {
+//                                        Palette.Swatch mutedSwatch = palette.getMutedSwatch();
+//                                        if (mutedSwatch != null) {
+//                                            int color = mutedSwatch.getRgb();
+//                                            itemHolder.footer.setBackgroundColor(color);
+//                                            int textColor = TimberUtils.getBlackWhiteColor(mutedSwatch.getTitleTextColor());
+//                                            itemHolder.title.setTextColor(textColor);
+//                                            itemHolder.artist.setTextColor(textColor);
+//                                        }
+//                                    }
+//
+//
+//                                }
+//                            });
+//                        }
+//
+//                    }
+//
+//                    @Override
+//                    public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
+//                        if (isGrid) {
+//                            itemHolder.footer.setBackgroundColor(0);
+//                            if (mContext != null) {
+//                                int textColorPrimary = Config.textColorPrimary(mContext, Helpers.getATEKey(mContext));
+//                                itemHolder.title.setTextColor(textColorPrimary);
+//                                itemHolder.artist.setTextColor(textColorPrimary);
+//                            }
+//                        }
+//                    }
+//                });
         itemHolder.artist.setText(" " + String.valueOf(songCountInt) + " " + mContext.getString(R.string.songs));
 
         if (TimberUtils.isLollipop())

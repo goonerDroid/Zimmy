@@ -8,12 +8,10 @@ import android.graphics.Bitmap;
 import android.text.TextUtils;
 import android.widget.RemoteViews;
 
-import com.nostra13.universalimageloader.core.ImageLoader;
 import com.sublime.zimmy.MusicPlayer;
 import com.sublime.zimmy.MusicService;
 import com.sublime.zimmy.R;
 import com.sublime.zimmy.utils.NavigationUtils;
-import com.sublime.zimmy.utils.TimberUtils;
 
 /**
  * Created by nv95 on 08.07.16.
@@ -68,11 +66,11 @@ public class StandardWidget extends BaseWidget {
                 MusicPlayer.isPlaying() ? R.drawable.ic_pause_white_36dp : R.drawable.ic_play_white_36dp);
         long albumId = MusicPlayer.getCurrentAlbumId();
         if (albumId != -1) {
-            Bitmap artwork;
-            artwork = ImageLoader.getInstance().loadImageSync(TimberUtils.getAlbumArtUri(albumId).toString());
-            if (artwork == null) {
-                artwork = ImageLoader.getInstance().loadImageSync("drawable://" + R.drawable.ic_empty_music2);
-            }
+            Bitmap artwork = null;
+//            artwork = ImageLoader.getInstance().loadImageSync(TimberUtils.getAlbumArtUri(albumId).toString());
+//            if (artwork == null) {
+//                artwork = ImageLoader.getInstance().loadImageSync("drawable://" + R.drawable.ic_empty_music2);
+//            }
             remoteViews.setImageViewBitmap(R.id.imageView_cover, artwork);
         }
         remoteViews.setOnClickPendingIntent(R.id.imageView_cover, PendingIntent.getActivity(

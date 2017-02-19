@@ -17,8 +17,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
 import com.sublime.zimmy.MusicPlayer;
 import com.sublime.zimmy.R;
 import com.sublime.zimmy.dataloaders.FolderLoader;
@@ -84,11 +82,11 @@ public class FolderAdapter extends RecyclerView.Adapter<FolderAdapter.ItemHolder
         if (localItem.isDirectory()) {
             itemHolder.albumArt.setImageDrawable("..".equals(localItem.getName()) ? mIcons[1] : mIcons[0]);
         } else {
-            ImageLoader.getInstance().displayImage(TimberUtils.getAlbumArtUri(song.albumId).toString(),
-                    itemHolder.albumArt,
-                    new DisplayImageOptions.Builder().
-                            cacheInMemory(true).showImageOnFail(mIcons[2])
-                            .resetViewBeforeLoading(true).build());
+//            ImageLoader.getInstance().displayImage(TimberUtils.getAlbumArtUri(song.albumId).toString(),
+//                    itemHolder.albumArt,
+//                    new DisplayImageOptions.Builder().
+//                            cacheInMemory(true).showImageOnFail(mIcons[2])
+//                            .resetViewBeforeLoading(true).build());
         }
     }
 

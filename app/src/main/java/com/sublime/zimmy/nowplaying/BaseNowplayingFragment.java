@@ -37,10 +37,6 @@ import android.widget.TextView;
 
 import com.afollestad.appthemeengine.ATE;
 import com.afollestad.appthemeengine.Config;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.assist.FailReason;
-import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 import com.sublime.zimmy.MusicPlayer;
 import com.sublime.zimmy.R;
 import com.sublime.zimmy.activities.BaseActivity;
@@ -449,23 +445,23 @@ public class BaseNowplayingFragment extends Fragment implements MusicStateListen
         //do not reload image if it was a play/pause change
         if (!duetoplaypause) {
             if (albumart != null) {
-                ImageLoader.getInstance().displayImage(TimberUtils.getAlbumArtUri(MusicPlayer.getCurrentAlbumId()).toString(), albumart,
-                        new DisplayImageOptions.Builder().cacheInMemory(true)
-                                .showImageOnFail(R.drawable.ic_empty_music2)
-                                .build(), new SimpleImageLoadingListener() {
-
-                            @Override
-                            public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-                                doAlbumArtStuff(loadedImage);
-                            }
-
-                            @Override
-                            public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
-                                Bitmap failedBitmap = ImageLoader.getInstance().loadImageSync("drawable://" + R.drawable.ic_empty_music2);
-                                doAlbumArtStuff(failedBitmap);
-                            }
-
-                        });
+//                ImageLoader.getInstance().displayImage(TimberUtils.getAlbumArtUri(MusicPlayer.getCurrentAlbumId()).toString(), albumart,
+//                        new DisplayImageOptions.Builder().cacheInMemory(true)
+//                                .showImageOnFail(R.drawable.ic_empty_music2)
+//                                .build(), new SimpleImageLoadingListener() {
+//
+//                            @Override
+//                            public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+//                                doAlbumArtStuff(loadedImage);
+//                            }
+//
+//                            @Override
+//                            public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
+//                                Bitmap failedBitmap = ImageLoader.getInstance().loadImageSync("drawable://" + R.drawable.ic_empty_music2);
+//                                doAlbumArtStuff(failedBitmap);
+//                            }
+//
+//                        });
             }
         }
         duetoplaypause = false;

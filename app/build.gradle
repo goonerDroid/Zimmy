@@ -48,7 +48,7 @@ dependencies {
     compile 'com.android.support:design:25.1.1'
     compile 'com.android.support:percent:25.1.1'
 
-    compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.4'
+    compile 'com.github.bumptech.glide:glide:3.7.0'
     compile 'net.steamcrafted:materialiconlib:1.0.3'
     compile 'com.squareup.retrofit:retrofit:1.9.0'
     compile 'com.squareup.okhttp:okhttp-urlconnection:2.3.0'
