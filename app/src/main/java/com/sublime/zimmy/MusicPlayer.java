@@ -186,7 +186,7 @@ public class MusicPlayer {
         }
     }
 
-    public static final boolean isPlaying() {
+    public static boolean isPlaying() {
         if (mService != null) {
             try {
                 return mService.isPlaying();

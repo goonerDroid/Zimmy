@@ -151,7 +151,7 @@ public class NavigationUtils {
         intent.putExtra(Constants.ACTIVITY_TRANSITION, transitionViews != null);
 
         if (transitionViews != null && TimberUtils.isLollipop() && PreferencesUtility.getInstance(context).getAnimations()) {
-            ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(MainActivity.getInstance(), transitionViews.get(0), transitionViews.get(1), transitionViews.get(2));
+            ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(context, transitionViews.get(0), transitionViews.get(1), transitionViews.get(2));
             context.startActivityForResult(intent, Constants.ACTION_DELETE_PLAYLIST, options.toBundle());
         } else {
             context.startActivityForResult(intent, Constants.ACTION_DELETE_PLAYLIST);

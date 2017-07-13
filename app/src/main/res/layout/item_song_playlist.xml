@@ -63,7 +63,7 @@
 
         </LinearLayout>
 
-        <com.sublime.zimmy.widgets.MusicVisualizer
+        <com.sublime.zimmy.widgets.EqualizerView
             android:id="@+id/visualizer"
             android:layout_width="30dp"
             android:layout_height="40dp"

@@ -1,7 +1,8 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="fill_parent"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
     android:background="?attr/selectableItemBackground"
     android:orientation="vertical"
     android:paddingBottom="6dp"
@@ -53,13 +54,15 @@
 
         </LinearLayout>
 
-        <com.sublime.zimmy.widgets.MusicVisualizer
+        <com.sublime.zimmy.widgets.EqualizerView
             android:id="@+id/visualizer"
             android:layout_width="30dp"
             android:layout_height="40dp"
             android:layout_centerVertical="true"
             android:layout_marginBottom="10dp"
             android:layout_marginRight="15dp"
+            custom:animDuration="3500"
+            custom:foregroundColor="@color/colorAccent"
             android:layout_toLeftOf="@+id/popup_menu"
             android:visibility="gone" />
 

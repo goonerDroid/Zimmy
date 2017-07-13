@@ -34,7 +34,7 @@ import com.sublime.zimmy.models.Song;
 import com.sublime.zimmy.utils.Helpers;
 import com.sublime.zimmy.utils.NavigationUtils;
 import com.sublime.zimmy.utils.TimberUtils;
-import com.sublime.zimmy.widgets.MusicVisualizer;
+import com.sublime.zimmy.widgets.EqualizerView;
 
 import java.util.List;
 
@@ -69,8 +69,10 @@ public class PlayingQueueAdapter extends RecyclerView.Adapter<PlayingQueueAdapte
         if (MusicPlayer.getCurrentAudioId() == localItem.id) {
             itemHolder.title.setTextColor(Config.accentColor(mContext, ateKey));
             if (MusicPlayer.isPlaying()) {
-                itemHolder.visualizer.setColor(Config.accentColor(mContext, ateKey));
+                itemHolder.visualizer.animateBars();
                 itemHolder.visualizer.setVisibility(View.VISIBLE);
+            }else{
+                itemHolder.visualizer.stopBars();
             }
         } else {
             itemHolder.title.setTextColor(Config.textColorPrimary(mContext, ateKey));
@@ -146,7 +148,7 @@ public class PlayingQueueAdapter extends RecyclerView.Adapter<PlayingQueueAdapte
     public class ItemHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         protected TextView title, artist;
         protected ImageView albumArt, reorder, menu;
-        private MusicVisualizer visualizer;
+        private EqualizerView visualizer;
 
         public ItemHolder(View view) {
             super(view);
@@ -155,7 +157,7 @@ public class PlayingQueueAdapter extends RecyclerView.Adapter<PlayingQueueAdapte
             this.albumArt = (ImageView) view.findViewById(R.id.albumArt);
             this.menu = (ImageView) view.findViewById(R.id.popup_menu);
             this.reorder = (ImageView) view.findViewById(R.id.reorder);
-            visualizer = (MusicVisualizer) view.findViewById(R.id.visualizer);
+            visualizer = (EqualizerView) view.findViewById(R.id.visualizer);
             view.setOnClickListener(this);
         }
 

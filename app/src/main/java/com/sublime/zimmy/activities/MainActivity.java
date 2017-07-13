@@ -27,7 +27,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -35,6 +34,7 @@ import android.widget.TextView;
 
 import com.afollestad.appthemeengine.customizers.ATEActivityThemeCustomizer;
 import com.anjlab.android.iab.v3.BillingProcessor;
+import com.bumptech.glide.Glide;
 import com.sublime.zimmy.MusicPlayer;
 import com.sublime.zimmy.R;
 import com.sublime.zimmy.fragments.AlbumDetailFragment;
@@ -57,9 +57,8 @@ import java.util.Map;
 public class MainActivity extends BaseActivity implements ATEActivityThemeCustomizer {
 
 
-    private static MainActivity sMainActivity;
-    SlidingUpPanelLayout panelLayout;
-    NavigationView navigationView;
+   private SlidingUpPanelLayout panelLayout;
+    private NavigationView navigationView;
     TextView songtitle, songartist;
     ImageView albumart;
     String action;
@@ -143,14 +142,10 @@ public class MainActivity extends BaseActivity implements ATEActivityThemeCustom
     private DrawerLayout mDrawerLayout;
     private boolean isDarkTheme;
 
-    public static MainActivity getInstance() {
-        return sMainActivity;
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
 
-        sMainActivity = this;
         action = getIntent().getAction();
 
         isDarkTheme = PreferenceManager.getDefaultSharedPreferences(this).getBoolean("dark_theme", false);
@@ -241,20 +236,13 @@ public class MainActivity extends BaseActivity implements ATEActivityThemeCustom
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        super.onCreateOptionsMenu(menu);
-        return true;
-    }
-
-    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home: {
-                if (isNavigatingMain()) {
-                    mDrawerLayout.openDrawer(GravityCompat.START);
-                } else super.onBackPressed();
-                return true;
-            }
+        int i = item.getItemId();
+        if (i == android.R.id.home) {
+            if (isNavigatingMain()) {
+                mDrawerLayout.openDrawer(GravityCompat.START);
+            } else super.onBackPressed();
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -394,18 +382,16 @@ public class MainActivity extends BaseActivity implements ATEActivityThemeCustom
 //                        .showImageOnFail(R.drawable.ic_empty_music2)
 //                        .resetViewBeforeLoading(true)
 //                        .build());
+
+        Glide.with(this)
+                .load(TimberUtils.getAlbumArtUri(MusicPlayer.getCurrentAlbumId()).toString())
+                .into(albumart);
     }
 
     @Override
     public void onMetaChanged() {
         super.onMetaChanged();
         setDetailsToHeader();
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        sMainActivity = this;
     }
 
     @Override
